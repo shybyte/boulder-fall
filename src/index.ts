@@ -1,77 +1,70 @@
 import {MAP_LEVEL1} from './levels.js';
 import {Movement, MOVEMENTS_BY_KEY, PositionDeltaByMovement} from './player_movements.js';
 import {TileMapRenderer} from './renderer.js';
-import {FALLING_TILES, Tile, TileMap} from './tiles.js';
-import {deepClone, forEach2D, Position, waitForAnimationFrame} from './utils.js';
-
-function getTilePos(tileMap: TileMap, searchedTile: Tile): Position | undefined {
-  let pos;
-  forEach2D(tileMap, (tile, x, y) => {
-    if (tile === searchedTile) {
-      pos = {x, y};
-    }
-  });
-  return pos;
-}
-
-function moveTile(tileMap: TileMap, currentPos: Position, nextPos: Position) {
-  tileMap[nextPos.y][nextPos.x] = tileMap[currentPos.y][currentPos.x];
-  tileMap[currentPos.y][currentPos.x] = Tile.AIR;
-}
+import {TileMap} from './tilemap.js';
+import {FALLING_TILES, Tile} from './tiles.js';
+import {addPositionDelta, assertUnreachable, waitForAnimationFrame} from './utils.js';
 
 function movePlayer(tileMap: TileMap, movement: Movement) {
-  const playerPos = getTilePos(tileMap, Tile.PLAYER)!;
+  const playerPos = tileMap.getTilePos(Tile.PLAYER)!;
   const posDelta = PositionDeltaByMovement[movement];
-  const newPlayerPos: Position = {x: playerPos.x + posDelta.xd, y: playerPos.y + posDelta.yd};
-  const tileAtNewPlayerPos = tileMap[newPlayerPos.y][newPlayerPos.x];
-
-  const behindNewPlayerPos: Position = {x: playerPos.x + 2 * posDelta.xd, y: playerPos.y + 2 * posDelta.yd};
-  const tileBehindNewPlayerPos = tileMap[behindNewPlayerPos.y][behindNewPlayerPos.x];
+  const newPlayerPos = addPositionDelta(playerPos, posDelta) ;
+  const tileAtNewPlayerPos = tileMap.getTile(newPlayerPos);
 
   switch (tileAtNewPlayerPos) {
     case Tile.BOX:
     case Tile.STONE:
       if (movement === Movement.left || movement === Movement.right) {
+        const behindNewPlayerPos = addPositionDelta(newPlayerPos, posDelta);
+        const tileBehindNewPlayerPos = tileMap.getTile(behindNewPlayerPos);
         if (tileBehindNewPlayerPos === Tile.AIR) {
-          moveTile(tileMap, newPlayerPos, behindNewPlayerPos);
-          moveTile(tileMap, playerPos, newPlayerPos);
+          tileMap.moveTile(newPlayerPos, behindNewPlayerPos);
+          tileMap.moveTile(playerPos, newPlayerPos);
         }
       }
       break;
+
     case Tile.KEY1:
     case Tile.KEY2:
-      const lockPos = getTilePos(tileMap, tileAtNewPlayerPos + 1);
+      const lockPos = tileMap.getTilePos(tileAtNewPlayerPos + 1);
       if (lockPos) {
-        tileMap[lockPos.y][lockPos.x] = Tile.AIR;
+        tileMap.setTile(lockPos, Tile.AIR);
       }
-      moveTile(tileMap, playerPos, newPlayerPos);
+      tileMap.moveTile(playerPos, newPlayerPos);
       break;
+
     case Tile.AIR:
     case Tile.FLUX:
-      moveTile(tileMap, playerPos, newPlayerPos);
+      tileMap.moveTile(playerPos, newPlayerPos);
       break;
+
     case Tile.UNBREAKABLE:
+    case Tile.LOCK1:
+    case Tile.LOCK2:
+    case Tile.PLAYER:
+      break;
+
+    default:
+      assertUnreachable(tileAtNewPlayerPos);
   }
 }
 
 function updateMap(tileMap: TileMap) {
-  forEach2D(tileMap, (tile, x, y) => {
-    const yBelow = y + 1;
-    if (FALLING_TILES.includes(tile) && tileMap[yBelow][x] === Tile.AIR) {
-      moveTile(tileMap, {x, y}, {x, y: yBelow});
+  tileMap.forEachTile((tile, pos) => {
+    const posBelow = addPositionDelta(pos, PositionDeltaByMovement.down);
+    if (FALLING_TILES.includes(tile) && tileMap.getTile(posBelow) === Tile.AIR) {
+      tileMap.moveTile(pos, posBelow);
     }
   });
 }
 
 function isFinished(tileMap: TileMap) {
-  const width = tileMap[0].length;
-  const height = tileMap.length;
-  return tileMap[height - 2][width - 2] === Tile.BOX;
+  return tileMap.getTile({x: tileMap.width - 2, y: tileMap.height - 2}) === Tile.BOX;
 }
 
 async function main() {
   const mapRenderer = new TileMapRenderer();
-  const tileMap = deepClone(MAP_LEVEL1);
+  const tileMap = new TileMap(MAP_LEVEL1);
 
   window.addEventListener('keydown', e => {
     const movement = MOVEMENTS_BY_KEY[e.key];

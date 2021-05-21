@@ -11,4 +11,3 @@ export enum Tile {
 
 export const FALLING_TILES = [Tile.STONE, Tile.BOX];
 
-export type TileMap = Tile[][];

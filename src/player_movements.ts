@@ -1,11 +1,11 @@
+import {PositionDelta} from './utils.js';
+
 export const enum Movement {
   up = 'up',
   left = 'left',
   right = 'right',
   down = 'down'
 }
-
-export type PositionDelta = { xd: number, yd: number; };
 
 export const PositionDeltaByMovement: Record<Movement, PositionDelta> = {
   up: {xd: 0, yd: -1,},
