@@ -1,6 +1,6 @@
 import {MAP_LEVEL1} from './levels.js';
-import {Movement, movePlayer, updateMap} from './update-map.js';
-import {TileMapRenderer} from './renderer.js';
+import {Movement, movePlayer, letTilesFallDown} from './move-tiles.js';
+import {renderTileMap} from './render.js';
 import {Tile, TileMap} from './tiles.js';
 import {Array2D} from './utils/array2d.js';
 import {waitForAnimationFrame} from './utils/utils.js';
@@ -21,7 +21,6 @@ function isFinished(tileMap: TileMap) {
 }
 
 async function main() {
-  const mapRenderer = new TileMapRenderer();
   const tileMap = new Array2D(MAP_LEVEL1);
 
   window.addEventListener('keydown', e => {
@@ -32,9 +31,9 @@ async function main() {
   });
 
   while (!isFinished(tileMap)) {
-    updateMap(tileMap);
+    letTilesFallDown(tileMap);
     await waitForAnimationFrame();
-    mapRenderer.renderTileMap(tileMap);
+    renderTileMap(tileMap);
   }
 
   console.log('Finished');

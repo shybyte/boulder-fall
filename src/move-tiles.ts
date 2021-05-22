@@ -65,7 +65,7 @@ export function movePlayer(tileMap: TileMap, movement: Movement) {
   }
 }
 
-export function updateMap(tileMap: TileMap) {
+export function letTilesFallDown(tileMap: TileMap) {
   tileMap.forEach((tile, pos) => {
     const posBelow = addPositionDelta(pos, PositionDeltaByMovement.down);
     if (FALLING_TILES.includes(tile) && tileMap.get(posBelow) === Tile.AIR) {

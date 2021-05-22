@@ -23,10 +23,10 @@ export class Array2D<T> {
     return this.data[pos.y][pos.x];
   }
 
-  find(searchedT: T): Position | undefined {
+  find(wantedElement: T): Position | undefined {
     let pos;
     this.forEach((element, posT) => {
-      if (element === searchedT) {
+      if (element === wantedElement) {
         pos = posT;
       }
     });
