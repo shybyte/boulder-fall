@@ -25,6 +25,7 @@ export function movePlayer(tileMap: TileMap, movement: Movement) {
   const posDelta = PositionDeltaByMovement[movement];
   const newPlayerPos = addPositionDelta(playerPos, posDelta);
   const tileAtNewPlayerPos = tileMap.get(newPlayerPos);
+  const movePlayerReally = () => moveTile(tileMap, playerPos, newPlayerPos);
 
   switch (tileAtNewPlayerPos) {
     case Tile.BOX:
@@ -34,7 +35,7 @@ export function movePlayer(tileMap: TileMap, movement: Movement) {
         const tileBehindNewPlayerPos = tileMap.get(behindNewPlayerPos);
         if (tileBehindNewPlayerPos === Tile.AIR) {
           moveTile(tileMap, newPlayerPos, behindNewPlayerPos);
-          moveTile(tileMap, playerPos, newPlayerPos);
+          movePlayerReally();
         }
       }
       break;
@@ -45,12 +46,12 @@ export function movePlayer(tileMap: TileMap, movement: Movement) {
       if (lockPos) {
         tileMap.set(lockPos, Tile.AIR);
       }
-      moveTile(tileMap, playerPos, newPlayerPos);
+      movePlayerReally();
       break;
 
     case Tile.AIR:
     case Tile.FLUX:
-      moveTile(tileMap, playerPos, newPlayerPos);
+      movePlayerReally();
       break;
 
     case Tile.UNBREAKABLE:
