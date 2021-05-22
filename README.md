@@ -3,15 +3,15 @@
 # Compile
 
 ```
-    tsc
+    npm run build
 ```
 
-# Dev with
+# Dev with Live Reload
 
 ```
-     tsc -w
+     npm run tsc:watch
 ```
 
 ```
-     browser-sync start --server .
+     npm run browser-sync 
 ```

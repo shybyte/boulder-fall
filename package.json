@@ -5,6 +5,7 @@
   "private": true,
   "main": "src/index.ts",
   "scripts": {
+    "build": "tsc",
     "tsc:watch": "tsc -w",
     "browser-sync": "browser-sync start -f dist/* --server .",
     "lint": "eslint . --ext .ts",
