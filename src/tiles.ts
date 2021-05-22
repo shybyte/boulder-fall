@@ -1,3 +1,5 @@
+import {Array2D} from './utils/array2d.js';
+
 export enum Tile {
   AIR = 0,
   FLUX = 1,
@@ -11,3 +13,4 @@ export enum Tile {
 
 export const FALLING_TILES = [Tile.STONE, Tile.BOX];
 
+export type TileMap = Array2D<Tile>

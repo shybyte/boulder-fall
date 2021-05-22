@@ -1,5 +1,4 @@
-import {TileMap} from './tilemap.js';
-import {Tile} from './tiles.js';
+import {Tile, TileMap} from './tiles.js';
 
 const TILE_SIZE = 32;
 
@@ -25,7 +24,7 @@ export class TileMapRenderer {
   }
 
   renderTileMap(tileMap: TileMap) {
-    tileMap.forEachTile((tile, pos) => {
+    tileMap.forEach((tile, pos) => {
       this.canvasContext.fillStyle = TILE_COLOR[tile];
       this.canvasContext.fillRect(pos.x * TILE_SIZE, pos.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
     });

@@ -1,6 +1,6 @@
-import {TileMapData} from './tilemap.js';
+import {Tile} from './tiles.js';
 
-export const MAP_LEVEL1: TileMapData = [
+export const MAP_LEVEL1: Tile[][] = [
   [2, 2, 2, 2, 2, 2, 2, 2],
   [2, 3, 0, 1, 1, 2, 0, 2],
   [2, 4, 2, 6, 1, 2, 0, 2],

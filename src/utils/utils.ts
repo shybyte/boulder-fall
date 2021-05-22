@@ -22,14 +22,6 @@ export function deepClone(x: unknown) {
   return JSON.parse(JSON.stringify(x));
 }
 
-export function forEach2D<T>(array: T[][], callback: (el: T, x: number, y: number) => void) {
-  array.forEach((row, y) => {
-    row.forEach((el, x) => {
-      callback(el, x, y);
-    });
-  });
-}
-
 export function assertUnreachable(x: never): never {
   throw new Error(`Didn't expect to get "${x}" here`);
 }
