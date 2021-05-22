@@ -1,0 +1,30 @@
+{
+  "name": "boulder-fall",
+  "version": "0.0.1",
+  "description": "",
+  "private": true,
+  "main": "src/index.ts",
+  "scripts": {
+    "tsc:watch": "tsc -w",
+    "browser-sync": "browser-sync start -f dist/* --server .",
+    "lint": "eslint . --ext .ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shybyte/boulder-fall.git"
+  },
+  "author": "Marco Stahl",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shybyte/boulder-fall/issues"
+  },
+  "homepage": "https://github.com/shybyte/boulder-fall#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.24.0",
+    "@typescript-eslint/parser": "^4.24.0",
+    "browser-sync": "^2.26.14",
+    "eslint": "^7.27.0",
+    "typescript": "^4.2.4"
+  }
+}

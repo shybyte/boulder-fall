@@ -15,12 +15,12 @@ const PositionDeltaByMovement: Record<Movement, PositionDelta> = {
   right: {xd: 1, yd: 0}
 };
 
-function moveTile(tileMap: TileMap, currentPos: Position, nextPos: Position) {
+function moveTile(tileMap: TileMap, currentPos: Position, nextPos: Position): void {
   tileMap.set(nextPos, tileMap.get(currentPos))
   tileMap.set(currentPos, Tile.AIR)
 }
 
-export function movePlayer(tileMap: TileMap, movement: Movement) {
+export function movePlayer(tileMap: TileMap, movement: Movement): void {
   const playerPos = tileMap.find(Tile.PLAYER)!;
   const posDelta = PositionDeltaByMovement[movement];
   const newPlayerPos = addPositionDelta(playerPos, posDelta);
@@ -41,13 +41,14 @@ export function movePlayer(tileMap: TileMap, movement: Movement) {
       break;
 
     case Tile.KEY1:
-    case Tile.KEY2:
+    case Tile.KEY2: {
       const lockPos = tileMap.find(LOCK_BY_KEY[tileAtNewPlayerPos]);
       if (lockPos) {
         tileMap.set(lockPos, Tile.AIR);
       }
       movePlayerReally();
       break;
+    }
 
     case Tile.AIR:
     case Tile.FLUX:
@@ -65,7 +66,7 @@ export function movePlayer(tileMap: TileMap, movement: Movement) {
   }
 }
 
-export function letTilesFallDown(tileMap: TileMap) {
+export function letTilesFallDown(tileMap: TileMap): void {
   tileMap.forEach((tile, pos) => {
     const posBelow = addPositionDelta(pos, PositionDeltaByMovement.down);
     if (FALLING_TILES.includes(tile) && tileMap.get(posBelow) === Tile.AIR) {

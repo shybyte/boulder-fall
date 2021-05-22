@@ -7,15 +7,15 @@ export class Array2D<T> {
     this.data = deepClone(data);
   }
 
-  public get width() {
+  public get width(): number {
     return this.data[0].length;
   }
 
-  public get height() {
+  public get height(): number {
     return this.data.length;
   }
 
-  set(pos: Position, element: T) {
+  set(pos: Position, element: T): void {
     this.data[pos.y][pos.x] = element;
   }
 
@@ -33,7 +33,7 @@ export class Array2D<T> {
     return pos;
   }
 
-  forEach(callback: (el: T, pos: Position) => void) {
+  forEach(callback: (el: T, pos: Position) => void): void {
     this.data.forEach((row, y) => {
       row.forEach((el, x) => {
         ((el, x, y) => callback(el, {x, y}))(el, x, y);

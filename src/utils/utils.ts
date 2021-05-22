@@ -12,13 +12,13 @@ export function addPositionDelta(position: Position, delta: PositionDelta): Posi
   };
 }
 
-export function waitForAnimationFrame() {
+export function waitForAnimationFrame(): Promise<void> {
   return new Promise((resolve) => {
-    window.requestAnimationFrame(resolve);
+    window.requestAnimationFrame(() => resolve());
   })
 }
 
-export function deepClone(x: unknown) {
+export function deepClone<T>(x: T): T {
   return JSON.parse(JSON.stringify(x));
 }
 

@@ -15,7 +15,7 @@ const TILE_COLOR: Record<Tile, string> = {
   [Tile.LOCK2]: '#00ccff',
 }
 
-export function renderTileMap(tileMap: TileMap) {
+export function renderTileMap(tileMap: TileMap): void {
   const canvasContext = (document.getElementById('GameCanvas') as HTMLCanvasElement).getContext('2d')!;
 
   tileMap.forEach((tile, pos) => {
