@@ -3,15 +3,15 @@
 # Compile
 
 ```
-    npm run build
+npm run build
 ```
 
-# Dev with Live Reload
+# Develop with Live Reload
 
 ```
-     npm run tsc:watch
+npm run tsc:watch
 ```
 
 ```
-     npm run browser-sync 
+npm run browser-sync 
 ```
