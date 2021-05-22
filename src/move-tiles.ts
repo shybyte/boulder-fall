@@ -28,33 +28,37 @@ export function movePlayer(tileMap: TileMap, movement: Movement): void {
   const movePlayerReally = () => moveTile(tileMap, playerPos, newPlayerPos);
 
   switch (tileAtNewPlayerPos) {
+    // Push pushable tiles if nothing is behind.
     case Tile.BOX:
     case Tile.STONE:
       if (movement === Movement.left || movement === Movement.right) {
         const behindNewPlayerPos = addPositionDelta(newPlayerPos, posDelta);
         const tileBehindNewPlayerPos = tileMap.get(behindNewPlayerPos);
         if (tileBehindNewPlayerPos === Tile.AIR) {
-          moveTile(tileMap, newPlayerPos, behindNewPlayerPos);
+          moveTile(tileMap, newPlayerPos, behindNewPlayerPos); // Push it.
           movePlayerReally();
         }
       }
       break;
 
+    // Collecting a key opens the corresponding lock.
     case Tile.KEY1:
     case Tile.KEY2: {
       const lockPos = tileMap.find(LOCK_BY_KEY[tileAtNewPlayerPos]);
       if (lockPos) {
-        tileMap.set(lockPos, Tile.AIR);
+        tileMap.set(lockPos, Tile.AIR); // Remove Lock.
       }
       movePlayerReally();
       break;
     }
 
+    // Player can move freely.
     case Tile.AIR:
     case Tile.FLUX:
       movePlayerReally();
       break;
 
+    // Player is blocked and can't move in this direction.
     case Tile.WALL:
     case Tile.LOCK1:
     case Tile.LOCK2:
@@ -62,6 +66,7 @@ export function movePlayer(tileMap: TileMap, movement: Movement): void {
       break;
 
     default:
+      // Ensure we don't forget to handle a tile.
       assertUnreachable(tileAtNewPlayerPos);
   }
 }
