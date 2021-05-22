@@ -13,4 +13,9 @@ export enum Tile {
 
 export const FALLING_TILES = [Tile.STONE, Tile.BOX];
 
+export const LOCK_BY_KEY = {
+  [Tile.KEY1]: Tile.LOCK1,
+  [Tile.KEY2]: Tile.LOCK2
+}
+
 export type TileMap = Array2D<Tile>

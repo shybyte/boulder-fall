@@ -1,6 +1,5 @@
-import {FALLING_TILES, Tile, TileMap} from './tiles.js';
-import {addPositionDelta, assertUnreachable, Position} from './utils/utils.js';
-import {PositionDelta} from './utils/utils.js';
+import {FALLING_TILES, LOCK_BY_KEY, Tile, TileMap} from './tiles.js';
+import {addPositionDelta, assertUnreachable, Position, PositionDelta} from './utils/utils.js';
 
 export const enum Movement {
   up = 'up',
@@ -42,7 +41,7 @@ export function movePlayer(tileMap: TileMap, movement: Movement) {
 
     case Tile.KEY1:
     case Tile.KEY2:
-      const lockPos = tileMap.find(tileAtNewPlayerPos + 1);
+      const lockPos = tileMap.find(LOCK_BY_KEY[tileAtNewPlayerPos]);
       if (lockPos) {
         tileMap.set(lockPos, Tile.AIR);
       }
