@@ -15,7 +15,7 @@ export function addPositionDelta(position: Position, delta: PositionDelta): Posi
 export function waitForAnimationFrame(): Promise<void> {
   return new Promise((resolve) => {
     window.requestAnimationFrame(() => resolve());
-  })
+  });
 }
 
 export function deepClone<T>(x: T): T {

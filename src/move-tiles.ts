@@ -16,8 +16,8 @@ const PositionDeltaByMovement: Record<Movement, PositionDelta> = {
 };
 
 function moveTile(tileMap: TileMap, currentPos: Position, nextPos: Position): void {
-  tileMap.set(nextPos, tileMap.get(currentPos))
-  tileMap.set(currentPos, Tile.AIR)
+  tileMap.set(nextPos, tileMap.get(currentPos));
+  tileMap.set(currentPos, Tile.AIR);
 }
 
 export function movePlayer(tileMap: TileMap, movement: Movement): void {
