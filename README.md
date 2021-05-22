@@ -1,12 +1,24 @@
 # Boulder Fall - Game
 
-# Compile
+## Install dev dependencies
+
+```
+npm install
+```
+
+## Compile
 
 ```
 npm run build
 ```
 
-# Develop with Live Reload
+## Run 
+
+```
+npx serve .
+```
+
+# Develop with live reload
 
 ```
 npm run tsc:watch
