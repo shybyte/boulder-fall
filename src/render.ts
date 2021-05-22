@@ -5,7 +5,7 @@ const TILE_SIZE = 32;
 const TILE_COLOR: Record<Tile, string> = {
   [Tile.AIR]: '#ffffff',
   [Tile.FLUX]: '#ccffcc',
-  [Tile.UNBREAKABLE]: '#999999',
+  [Tile.WALL]: '#999999',
   [Tile.PLAYER]: '#ff0000',
   [Tile.STONE]: '#0000cc',
   [Tile.BOX]: '#8b4513',

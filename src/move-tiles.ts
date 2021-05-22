@@ -55,7 +55,7 @@ export function movePlayer(tileMap: TileMap, movement: Movement): void {
       movePlayerReally();
       break;
 
-    case Tile.UNBREAKABLE:
+    case Tile.WALL:
     case Tile.LOCK1:
     case Tile.LOCK2:
     case Tile.PLAYER:

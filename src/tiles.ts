@@ -3,7 +3,7 @@ import {Array2D} from './utils/array2d.js';
 export enum Tile {
   AIR = 0,
   FLUX = 1,
-  UNBREAKABLE = 2,
+  WALL = 2,
   PLAYER = 3,
   STONE = 4,
   BOX = 6,
